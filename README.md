@@ -1,0 +1,2 @@
+# Grange_Mobile
+This mobile web app for the fictitious Grange Institute of Technology is built with the MAMP web server solution package (Mac OS, Apache, MySQL, PHP) using a combination of HTML (including some new HTML5 functionality like local storage, geolocation and rich media), CSS and jQuery Mobile for styling and the user interface, JavaScript, jQuery, SQL and PHP, and using JSON for exchanging information between the browser and the database and third-party APIs.
