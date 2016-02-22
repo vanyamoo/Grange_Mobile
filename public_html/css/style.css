@@ -1,0 +1,65 @@
+#mapPage, #map-canvas { width: 100%; height: 100%; padding: 0; }
+
+.breadcrumbHome {
+	text-align: center;
+	background-color: #1A1A1A;
+}
+
+.breadcrumbRecent {
+	text-align: center; 
+	background-color: #303030;
+}
+
+.breadcrumbCurrent {
+	text-align: center;
+	background-color: #474747;
+	height: 60px;
+}
+
+.breadcrumbImage {
+	margin: 0 auto;
+	max-width: 70%;
+	max-height: 70%;
+	background-color: transparent !important;
+	border: none;
+}
+
+.breadcrumbText {
+	color: #d9d9d9;
+	font-weight: 100;
+	margin-left: 8px;
+}
+
+.homepageImage {
+	margin: 0 auto;
+	max-width: 70%;
+	max-height: 70%;
+	background-color: transparent !important;
+	border: none;
+}
+
+.homepageImageHeader {
+	margin: 0 auto;
+	max-width: 60%;
+	max-height: 60%;
+	background-color: transparent !important;
+	border: none;
+}
+
+.homepageImageFooter {
+	margin: 0 auto;
+	max-width: 50%;
+	max-height: 50%;
+	background-color: transparent !important;
+	border: none;
+}
+
+.homepageHeader {
+	text-align: center;
+	background-color: #d9d9d9;
+	height: 60px;
+}
+
+.homepage{
+	text-align: center;
+}

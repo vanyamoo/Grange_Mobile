@@ -1,0 +1,589 @@
+<!--
+Grange Mobile App home page
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Grange Mobile App</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css" />
+        <link rel="stylesheet" href="css/style.css" />
+        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script> <!--google maps API -->
+        <script src="javascript/GoogleMapsScript.js"></script>
+        <script src="javascript/pagesGeneratingFunctions.js"></script>
+        <script src="javascript/useLocalStorageFunctions.js"></script>
+        <script src="javascript/jquery.jfeed.pack.js"></script> <!-- source http://www.jsdelivr.com/#!jquery.jfeed-->
+	    <script>
+            
+            // start document ready function
+            $(document).ready(function(){
+
+                // generate Lecturers pages
+                generateLecturersPages();
+
+                // rebuild and style the Lecturers page listview
+                $('#peoplePage').bind('pageinit', function() {
+                     $('#peoplePageList').listview('refresh');
+                });
+
+                // generate Modules pages
+                generateModulesPages();
+
+                // rebuild and style the Modules page listview
+                $('#modulesPage').bind('pageinit', function() {
+                     $('#modulesPageList').listview('refresh');
+                });
+                
+                // generate Students pages
+                generateStudentsPages(); 
+
+                // rebuild and style the Students page listview
+                $('#studentsPage').bind('pageinit', function() {
+                     $('#studentsPageList').listview('refresh');
+                });
+
+                // generate Library pages
+                generateLibraryPages();
+
+                // rebuild and style the Library page listview
+                //$('#libraryPage').bind('pageinit', function() {
+                //     $('#libraryPageList').listview('refresh');
+                //});
+
+                // generate Art College pages
+                generateArtCollegePage();
+
+                // rebuild and style the Art College page listview
+                $('#artsPage').bind('pageinit', function() {
+                     $('#artsPageList').listview('refresh');
+                });
+
+                // generate Engineering College pages
+                generateEngineeringCollegePage();
+
+                // rebuild and style the Engineering College page listview
+                $('#engineeringPage').bind('pageinit', function() {
+                     $('#engineeringPageList').listview('refresh');
+                });
+
+                // generate Business College pages
+                generateBusinessCollegePage();
+
+                // rebuild and style the Business College page listview
+                $('#businessPage').bind('pageinit', function() {
+                     $('#businessPageList').listview('refresh');
+                });
+
+                // generate Science College pages
+                generateScienceCollegePage();
+
+                // rebuild and style the Science College page listview
+                $('#sciencePage').bind('pageinit', function() {
+                     $('#sciencePageList').listview('refresh');
+                });
+
+                // generate News page
+                generateNewsPage();
+
+                // rebuild and style the News page listview
+                $('#newsPage').bind('pageinit', function() {
+                     $('#newsPageList').listview('refresh');
+                });
+                
+                // initialise Google Map on Map page
+                $(document).on('pageinit', '#mapPage', drawMap); 
+
+                //generate Social page
+                generateSocialPage();
+                $('#socialPage').bind('pageinit', function() {
+                     $('#socialPageList').listview('refresh');
+                });
+
+            }); // end document ready function
+    
+        </script>
+
+    </head>
+    <body>
+        <!-- Home Page -->
+        <div data-role="page" data-theme="a" id="homePage">
+            <div class="homepageHeader" data-role="header" data-position="fixed"><div>Grange Mobile</div><img class="homepageImageHeader" src="images/menu_home_small.png"> 
+            </div>
+            <div data-role="main" class="ui-content">	
+                <div class="ui-grid-c" data-filter="true" data-filter-placeholder="Search..." id='homePageList'>
+                    <div class="ui-block-a homepage"><a href="#peoplePage"><img src="images/staff.png" class="ui-btn homepageImage"></a>Lecturers</div>
+                    <div class="ui-block-b homepage"><a href="#mapPage"><img  src="images/map.png" class="ui-btn homepageImage"></a>Map</div>
+                    <div class="ui-block-c homepage"><a href="#modulesPage"><img src="images/modules.png" class="ui-btn homepageImage"></a>Modules</div>
+                    <div class="ui-block-d homepage"><a href="#newsPage"><img src="images/news.png" class="ui-btn homepageImage"></a>News</div>
+                    <div class="ui-block-a homepage"><a href="#studentsPage"><img src="images/students.png" class="ui-btn homepageImage"></a>Students</div>
+                    <div class="ui-block-b homepage"><a href="#multimediaPage"><img src="images/multimedia.png" class="ui-btn homepageImage"></a>Multimedia</div>
+                    <div class="ui-block-c homepage"><a href="#socialPage"><img src="images/social.png" class="ui-btn homepageImage"></a>Social</div>
+                    <div class="ui-block-d homepage"><a href="#libraryPage"><img src="images/libraries.png" class="ui-btn homepageImage"></a>Library</div>
+                </div>		
+            </div><br/>
+            <div style="background-color:#6b6b6b;" data-role="footer" data-position="fixed">
+		        <div class="ui-grid-b" id='homePageListFooter'>
+                    <div class="ui-block-a homepage"><a href="#schoolsPage"><img src="images/links_thin.png" class="ui-btn homepageImageFooter"></a></div>
+                    <div class="ui-block-b homepage"><a href="http://www.dit.ie"><img src="images/fullsite_thin.png" class="ui-btn homepageImageFooter"></a></div>
+                    <div class="ui-block-c homepage"><a href="#aboutPage"><img src="images/about_thin_new.png" class="ui-btn homepageImageFooter"></a></div>
+                </div>
+            </div>
+        </div>
+        <!-- End of Home Page -->
+        
+        <!--Lecturers Page -->
+        <div data-role="page" id="peoplePage">
+            <div style="background-color:#474747; height:60px;" data-role="header"> 
+                <!-- Breadcrumb Navigation -->
+                <div data-role="listview" class="ui-grid-d">
+                    <div class="ui-block-a breadcrumbHome"><a href="#homePage"><img src="images/menu_home_small.png" class="ui-btn breadcrumbImage"></a></div>
+                    <div class="ui-block-c breadcrumbCurrent"><h4 class="breadcrumbText">Lecturers</h4></div>   
+                </div>
+                <!-- End of Breadcrumb Navigation -->
+            </div>
+            <div data-role="main" class="ui-content">	
+                <ul data-role="listview" data-filter="true" data-filter-placeholder="Search..." id='peoplePageList'>
+                </ul>		
+            </div>
+            <div data-role="footer">
+		        <h5>Grange Mobile 2014</h5>
+            </div>
+        </div>
+        <!-- End of Lecturers Page -->
+        
+        <!-- Students Page -->
+        <div data-role="page" id="studentsPage">
+            <div style="background-color:#474747; height:60px;" data-role="header">
+                <!-- Breadcrumb Navigation -->
+                <div class="ui-grid-d">
+                    <div class="ui-block-a breadcrumbHome"><a href="#homePage"><img src="images/menu_home_small.png" class="ui-btn breadcrumbImage"></a></div>
+                    <div class="ui-block-c breadcrumbCurrent"><h4 class="breadcrumbText">Students</h4></div>   
+                </div>
+                <!-- End of Breadcrumb Navigation -->
+            </div>
+            <div data-role="main" class="ui-content">	
+                <ul data-role="listview" data-filter="true" data-filter-placeholder="Search..." id='studentsPageList'>
+                </ul>		
+            </div>
+            <div data-role="footer">
+		        <h5>Grange Mobile 2014</h5>
+            </div>
+        </div>
+        <!-- End of Students Page -->
+        
+        <!-- Map Page -->
+        <div data-role="page" id="mapPage" data-url="map-page">
+            <div style="background-color:#474747; height:60px;" data-role="header">
+                <!-- Breadcrumb Navigation -->
+                <div class="ui-grid-d">
+                    <div class="ui-block-a breadcrumbHome"><a href="#homePage"><img src="images/menu_home_small.png" class="ui-btn breadcrumbImage"></a></div>
+                    <div class="ui-block-c breadcrumbCurrent"><h4 class="breadcrumbText"><span id="out"></span></h4></div>   
+                </div>
+                <!-- End of Breadcrumb Navigation -->
+            </div>
+            <div role="main" class="ui-content" id="map-canvas"><!-- map loads here... -->         
+            </div>
+            <div data-role="footer">
+            </div>
+        </div>
+        <!-- End of Map Page -->
+        
+        <!-- Modules Page -->
+        <div data-role="page" id="modulesPage">
+            <div style="background-color:#474747; height:60px;" data-role="header">
+                <!-- Breadcrumb Navigation -->
+                <div data-role="listview" class="ui-grid-d">
+                    <div class="ui-block-a breadcrumbHome"><a href="#homePage"><img src="images/menu_home_small.png" class="ui-btn breadcrumbImage"></a></div>
+                    <div class="ui-block-c breadcrumbCurrent"><h4 class="breadcrumbText">Modules</h4></div>   
+                </div>
+                <!-- End of Breadcrumb Navigation -->              
+            </div>
+            <div data-role="main" class="ui-content">	
+                <ul data-role="listview" data-filter="true" data-filter-placeholder="Search..." id='modulesPageList'>
+                </ul>		
+            </div>
+            <div data-role="footer">
+		        <h5>Grange Mobile 2014</h5>
+            </div>
+        </div>
+        <!-- End of Modules Page -->
+        
+        <!-- News Page -->
+        <div data-role="page" id="newsPage">
+            <div style="background-color:#474747; height:60px;" data-role="header">
+                <!-- Breadcrumb Navigation -->
+                <div data-role="listview" class="ui-grid-d">
+                    <div class="ui-block-a breadcrumbHome"><a href="#homePage"><img src="images/menu_home_small.png" class="ui-btn breadcrumbImage"></a></div>
+                    <div class="ui-block-c breadcrumbCurrent"><h4 class="breadcrumbText">News</h4></div>   
+                </div>
+                <!-- End of Breadcrumb Navigation -->
+            </div>
+            <div data-role="main" class="ui-content">	
+                <!--  rss feed -->
+                <ul data-role="listview" data-filter="true" data-filter-placeholder="Search..." id='newsPageList'>
+                </ul>		
+            </div>
+            <div data-role="footer">
+		        <h5>Grange Mobile 2014</h5>
+            </div>
+        </div>
+        <!-- End of News Page -->
+        
+        <!-- Multimedia Page -->
+        <div data-role="page" id="multimediaPage">
+            <div style="background-color:#474747; height:60px;" data-role="header">
+                <!-- Breadcrumb Navigation -->
+                <div data-role="listview" class="ui-grid-d" id='multimediaPageNavigation'>
+                    <div class="ui-block-a breadcrumbHome"><a href="#homePage"><img src="images/menu_home_small.png" class="ui-btn breadcrumbImage"></a></div>
+                    <div class="ui-block-c breadcrumbCurrent"><h4 class="breadcrumbText">Multimedia</h4></div>   
+                </div>
+                <!-- End of Breadcrumb Navigation -->
+            </div>
+            <div data-role="main" class="ui-content">
+                <form>
+                    <input id="filter-for-listview" data-type="search" placeholder="Type to search...">
+                </form>
+                <ul data-role="listview" data-inset="true" data-filter="true" data-input="#filter-for-listview" id='multimediaPageList'>
+                    <li><a href="#video1Page">
+                        <img src="images/openday.png" alt="open day">
+                        <h2>Open Day 2013</h2>
+                        <p>A taste of what to expect at GIT</p></a>
+                    </li>
+                    <li><a href="#video2Page">
+                        <img src="images/sportawards.png" alt="sport awards">
+                        <h2>Sports Awards</h2>
+                        <p>Be a part of GIT's athletic success</p></a>
+                    </li>
+                    <li><a href="#video3Page">
+                        <img src="images/grange.png" alt="grangegorman">
+                        <h2>Grangegorman</h2>
+                        <p>GIT on the move to the new Grangegorman Campus</p></a>
+                    </li>
+                    <li><a href="#video4Page">
+                        <img src="images/duck.png" alt="duck">
+                        <h2>GIT Duck Dance</h2>
+                        <p>A detailed tutorial on the GIT duck dance</p></a>
+                    </li>
+                    <li><a href="#video5Page">
+                        <img src="images/cpd.png" alt="cpd">
+                        <h2>CPD at GIT</h2>
+                        <p>Continuing Professional Development at GIT</p></a>
+                    </li>
+                </ul>		
+            </div>
+            <div data-role="footer">
+		        <h5>Grange Mobile 2014</h5>
+            </div>
+        </div>
+        <!-- End of Multimedia Page -->
+
+        <!--Video1 Page -->
+        <div data-role="page" id="video1Page">
+            <div style="background-color:#474747; height:60px;" data-role="header">
+                <!-- Breadcrumb Navigation -->
+                <div class="ui-grid-d">
+                    <div class="ui-block-a breadcrumbHome"><a href="#homePage"><img src="images/menu_home_small.png" class="ui-btn breadcrumbImage"></a></div>
+                    <div class="ui-block-b breadcrumbRecent"><a href="#multimediaPage"><img src="images/menu_multimedia.png" class="ui-btn breadcrumbImage"></a></div>
+                    <div class="ui-block-c breadcrumbCurrent"><h4 class="breadcrumbText">Video</h4></div>   
+                </div>
+                <!-- End of Breadcrumb Navigation -->
+            </div>
+            <div style="text-align:center" data-role="main" class="ui-content">
+                <h1>Open Day 2013</h1>    
+                    <video style="margin: 0 auto;" width="290" height="240" controls>
+                        <source src="video/movie1.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>   
+                <p>A taste of what to expect at GIT</p>    
+            </div>
+            <div data-role="footer">
+                <h5>Grange Mobile 2014</h5>
+            </div>
+        </div>
+        <!-- End of Video1 Page -->
+
+        <!--Video2 Page -->
+        <div data-role="page" id="video2Page">
+            <div style="background-color:#474747; height:60px;" data-role="header">
+                <!-- Breadcrumb Navigation -->
+                <div class="ui-grid-d">
+                    <div class="ui-block-a breadcrumbHome"><a href="#homePage"><img src="images/menu_home_small.png" class="ui-btn breadcrumbImage"></a></div>
+                    <div class="ui-block-b breadcrumbRecent"><a href="#multimediaPage"><img src="images/menu_multimedia.png" class="ui-btn breadcrumbImage"></a></div>
+                    <div class="ui-block-c breadcrumbCurrent"><h4 class="breadcrumbText">Video</h4></div>   
+                </div>
+                <!-- End of Breadcrumb Navigation -->
+            </div>
+            <div style="text-align:center" data-role="main" class="ui-content">   
+                <h2>Sports Awards</h2> 
+                    <video style="margin: 0 auto;" width="290" height="240" controls>
+                        <source src="video/movie2.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video> 
+                <p>Be a part of GIT's athletic success</p>      
+            </div>
+            <div data-role="footer">
+                <h5>Grange Mobile 2014</h5>
+            </div>
+        </div>
+        <!-- End of Video2 Page -->
+
+        <!--Video3 Page -->
+        <div data-role="page" id="video3Page">
+            <div style="background-color:#474747; height:60px;" data-role="header">
+                <!-- Breadcrumb Navigation -->
+                <div class="ui-grid-d">
+                    <div class="ui-block-a breadcrumbHome"><a href="#homePage"><img src="images/menu_home_small.png" class="ui-btn breadcrumbImage"></a></div>
+                    <div class="ui-block-b breadcrumbRecent"><a href="#multimediaPage"><img src="images/menu_multimedia.png" class="ui-btn breadcrumbImage"></a></div>
+                    <div class="ui-block-c breadcrumbCurrent"><h4 class="breadcrumbText">Video</h4></div>   
+                </div>
+                <!-- End of Breadcrumb Navigation -->
+            </div>
+            <div style="text-align:center" data-role="main" class="ui-content">   
+                <h2>Grangegorman</h2> 
+                    <video style="margin: 0 auto;" width="290" height="240" controls>
+                        <source src="video/movie3.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video> 
+                <p>GIT on the move to the new Grangegorman Campus</p>      
+            </div>
+            <div data-role="footer">
+                <h5>Grange Mobile 2014</h5>
+            </div>
+        </div>
+        <!-- End of Video3 Page -->
+
+        <!--Video4 Page -->
+        <div data-role="page" id="video4Page">
+            <div style="background-color:#474747; height:60px;" data-role="header">        
+                <!-- Breadcrumb Navigation -->
+                <div class="ui-grid-d">
+                    <div class="ui-block-a breadcrumbHome"><a href="#homePage"><img src="images/menu_home_small.png" class="ui-btn breadcrumbImage"></a></div>
+                    <div class="ui-block-b breadcrumbRecent"><a href="#multimediaPage"><img src="images/menu_multimedia.png" class="ui-btn breadcrumbImage"></a></div>
+                    <div class="ui-block-c breadcrumbCurrent"><h4 class="breadcrumbText">Video</h4></div>   
+                </div>
+                <!-- End of Breadcrumb Navigation -->
+            </div>
+            <div style="text-align:center" data-role="main" class="ui-content">   
+                <h2>GIT Duck Dance</h2> 
+                    <video style="margin: 0 auto;" width="290" height="240" controls>
+                        <source src="video/movie4.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video> 
+                <p>A detailed tutorial on the GIT duck dance</p>      
+            </div>
+            <div data-role="footer">
+                <h5>Grange Mobile 2014</h5>
+            </div>
+        </div>
+        <!-- End of Video4 Page -->
+
+        <!--Video5 Page -->
+        <div data-role="page" id="video5Page">
+            <div style="background-color:#474747; height:60px;" data-role="header">       
+                <!-- Breadcrumb Navigation -->
+                <div class="ui-grid-d">
+                    <div class="ui-block-a breadcrumbHome"><a href="#homePage"><img src="images/menu_home_small.png" class="ui-btn breadcrumbImage"></a></div>
+                    <div class="ui-block-b breadcrumbRecent"><a href="#multimediaPage"><img src="images/menu_multimedia.png" class="ui-btn breadcrumbImage"></a></div>
+                    <div class="ui-block-c breadcrumbCurrent"><h4 class="breadcrumbText">Video</h4></div>   
+                </div>
+                <!-- End of Breadcrumb Navigation -->
+            </div>
+            <div style="text-align:center" data-role="main" class="ui-content">   
+                <h2>CPD at GIT</h2> 
+                    <video style="margin: 0 auto;" width="290" height="240" controls>
+                        <source src="video/movie5.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video> 
+                <p>Continuing Professional Development at GIT</p>      
+            </div>
+            <div data-role="footer">
+                <h5>Grange Mobile 2014</h5>
+            </div>
+        </div>
+        <!-- End of Video5 Page -->
+
+        <!-- About Page -->
+        <div data-role="page" id="aboutPage">
+            <div style="background-color:#474747; height:60px;" data-role="header">
+                <!-- Breadcrumb Navigation -->
+                <div class="ui-grid-d">
+                    <div class="ui-block-a breadcrumbHome"><a href="#homePage"><img src="images/menu_home_small.png" class="ui-btn breadcrumbImage"></a></div>
+                    <div class="ui-block-c breadcrumbCurrent"><h4 class="breadcrumbText">About</h4></div>   
+                </div>
+                <!-- End of Breadcrumb Navigation -->
+            </div>
+            <div data-role="main" class="ui-content">    
+                <div class="ui-body ui-body-a ui-corner-all">
+                    <p>GIT is devoted to excellence in teaching, learning, and research, and to developing leaders in many disciplines who make a difference globally. GIT faculty are engaged with teaching and research to push the boundaries of human knowledge. The University has twelve degree-granting Schools in addition to the GIT Institute for Advanced Study.</p>   
+                    <p>Established in 1978, GIT is one of the youngest institution of higher education in the Ireland. The University, which is based in Dublin, Ireland, has an enrollment of over 20,000 degree candidates, including undergraduate, graduate, and professional students. GIT has more than 370,000 alumni around the world.</p> 
+                </div>
+             </div>
+            <div data-role="footer">
+                <h5>Grange Mobile 2014</h5>
+            </div>
+        </div>
+        <!-- End of About Page -->
+
+        <!-- Schools Page -->
+        <div data-role="page" id="schoolsPage">
+            <div style="background-color:#474747; height:60px;" data-role="header">
+                <!-- Breadcrumb Navigation -->
+                <div class="ui-grid-d">
+                    <div class="ui-block-a breadcrumbHome"><a href="#homePage"><img src="images/menu_home_small.png" class="ui-btn breadcrumbImage"></a></div>
+                    <div class="ui-block-c breadcrumbCurrent"><h4 class="breadcrumbText">Schools</h4></div>   
+                </div>
+                <!-- End of Breadcrumb Navigation -->
+            </div>
+            <div data-role="main" class="ui-content">    
+                <ul data-role="listview" data-inset="true" class="ui-grid-b" data-filter="true" data-filter-placeholder="Search..." id='schoolsPageList'>
+                    <li><a href="#artsPage">College of Arts and Tourism</a></li>  
+                    <li><a href="#engineeringPage">College of Engineering and <br/>Built Environment</a></li>
+                    <li><a href="#businessPage">College of Business</a></li>
+                    <li><a href="#sciencePage">College of Sciences <br/>and Health</a></li>
+                </ul>
+             </div>
+            <div data-role="footer">
+                <h5>Grange Mobile 2014</h5>
+            </div>
+        </div>
+        <!-- End of Schools Page -->
+
+        <!-- College of Arts and Tourism Page -->
+        <div data-role="page" id="artsPage">
+            <div style="background-color:#474747; height:60px;" data-role="header">
+                <!-- Breadcrumb Navigation -->
+                <div class="ui-grid-d">
+                    <div class="ui-block-a breadcrumbHome"><a href="#homePage"><img src="images/menu_home_small.png" class="ui-btn breadcrumbImage"></a></div>
+                    <div class="ui-block-b breadcrumbRecent"><a href="#schoolsPage"><img src="images/menu_schools.png" class="ui-btn breadcrumbImage"></a></div>
+                    <div class="ui-block-c breadcrumbCurrent"><h4 class="breadcrumbText">College</h4></div>   
+                </div>
+                <!-- End of Breadcrumb Navigation -->
+            </div>
+            <div data-role="main" class="ui-content">    
+                <ul data-role="listview" data-filter="true" data-filter-placeholder="Search..." id='artsPageList'>
+                </ul>       
+            </div>
+            <div data-role="footer">
+                <h5>Grange Mobile 2014</h5>
+            </div>
+        </div>
+        <!-- End of College of Arts and Tourism Page -->
+
+        <!-- College of Engineering and Built Environment Page -->
+        <div data-role="page" id="engineeringPage">
+            <div style="background-color:#474747; height:60px;" data-role="header">
+                <!-- Breadcrumb Navigation -->
+                <div class="ui-grid-d">
+                    <div class="ui-block-a breadcrumbHome"><a href="#homePage"><img src="images/menu_home_small.png" class="ui-btn breadcrumbImage"></a></div>
+                    <div class="ui-block-b breadcrumbRecent"><a href="#schoolsPage"><img src="images/menu_schools.png" class="ui-btn breadcrumbImage"></a></div>
+                    <div class="ui-block-c breadcrumbCurrent"><h4 class="breadcrumbText">College</h4></div>   
+                </div>
+                <!-- End of Breadcrumb Navigation -->
+            </div>
+            <div data-role="main" class="ui-content" >    
+                <ul data-role="listview" data-filter="true" data-filter-placeholder="Search..." id='engineeringPageList'>
+                </ul>       
+            </div>
+            <div data-role="footer">
+                <h5>Grange Mobile 2014</h5>
+            </div>
+        </div>
+        <!-- End of College of Engineering and Built Environment Page -->
+
+        <!-- College of Business Page -->
+        <div data-role="page" id="businessPage">
+            <div style="background-color:#474747; height:60px;" data-role="header">
+                <!-- Breadcrumb Navigation -->
+                <div class="ui-grid-d">
+                    <div class="ui-block-a breadcrumbHome"><a href="#homePage"><img src="images/menu_home_small.png" class="ui-btn breadcrumbImage"></a></div>
+                    <div class="ui-block-b breadcrumbRecent"><a href="#schoolsPage"><img src="images/menu_schools.png" class="ui-btn breadcrumbImage"></a></div>
+                    <div class="ui-block-c breadcrumbCurrent"><h4 class="breadcrumbText">College</h4></div>   
+                </div>
+                <!-- End of Breadcrumb Navigation -->
+            </div>
+            <div data-role="main" class="ui-content">    
+                <ul data-role="listview" data-filter="true" data-filter-placeholder="Search..." id='businessPageList'>
+                </ul>       
+            </div>
+            <div data-role="footer">
+                <h5>Grange Mobile 2014</h5>
+            </div>
+        </div>
+        <!-- End of College of Business Page -->
+
+        <!-- College of Sciences and Health Page -->
+        <div data-role="page" id="sciencePage">
+            <div style="background-color:#474747; height:60px;" data-role="header">
+                <!-- Breadcrumb Navigation -->
+                <div class="ui-grid-d">
+                    <div class="ui-block-a breadcrumbHome"><a href="#homePage"><img src="images/menu_home_small.png" class="ui-btn breadcrumbImage"></a></div>
+                    <div class="ui-block-b breadcrumbRecent"><a href="#schoolsPage"><img src="images/menu_schools.png" class="ui-btn breadcrumbImage"></a></div>
+                    <div class="ui-block-c breadcrumbCurrent"><h4 class="breadcrumbText">College</h4></div>   
+                </div>
+                <!-- End of Breadcrumb Navigation -->
+            </div>
+            <div data-role="main" class="ui-content">    
+                <ul data-role="listview" data-filter="true" data-filter-placeholder="Search..." id='sciencePageList'>
+                </ul>       
+            </div>
+            <div data-role="footer">
+                <h5>Grange Mobile 2014</h5>
+            </div>
+        </div>
+        <!-- End of College of Sciences and Health Page -->
+
+        <!-- Social Page -->
+        <div data-role="page" id="socialPage">
+            <div style="background-color:#474747; height:60px;" data-role="header">
+                <!-- Breadcrumb Navigation -->
+                <div class="ui-grid-d">
+                    <div class="ui-block-a breadcrumbHome"><a href="#homePage"><img src="images/menu_home_small.png" class="ui-btn breadcrumbImage"></a></div>
+                    <div class="ui-block-c breadcrumbCurrent"><h4 class="breadcrumbText">Social</h4></div>   
+                </div>
+                <!-- End of Breadcrumb Navigation -->
+            </div>
+            <div data-role="main" class="ui-content">  
+                <ul data-role="listview" data-filter="true" data-filter-placeholder="Search..." id='socialPageList'>
+                </ul>       
+            </div>
+            <div data-role="footer">
+                <h5>Grange Mobile 2014</h5>
+            </div>
+        </div>
+        <!-- End of Social Page -->
+
+        <!-- Library Page -->
+        <div data-role="page" id="libraryPage">
+            <div style="background-color:#474747; height:60px;" data-role="header">
+                <!-- Breadcrumb Navigation -->
+                <div class="ui-grid-d">
+                    <div class="ui-block-a breadcrumbHome"><a href="#homePage"><img src="images/menu_home_small.png" class="ui-btn breadcrumbImage"></a></div>
+                    <div class="ui-block-c breadcrumbCurrent"><h4 class="breadcrumbText">Library</h4></div>   
+                </div>
+                <!-- End of Breadcrumb Navigation -->
+            </div>
+            <div data-role="main" class="ui-content">  
+                <ul data-role="listview" data-filter="true" data-filter-placeholder="Search for a book..." id='libraryPageList' data-filter-reveal="true" data-inset="true">
+                </ul>     
+                <ul data-role="listview" data-inset="true">
+                    <li><h2>Aungier Street Library</h2><p style = "color: grey">Opening hours:</p><p>Monday - Thursday 9:00 - 21:00</p><p>Friday 9:00 - 17:00</p><p>Saturday 10:00 - 17:00</p></li>
+                    <li><h2>Bolton Street Library</h2><p style= "color: grey">Opening hours:</p><p>Monday - Thursday 9:00 - 21:00</p><p>Friday 9:00 - 17:00</p><p>Saturday 10:30 - 16:30</p></li>
+                    <li><h2>Cathal Brugha Street Library</h2><p style = "color: grey">Opening hours:</p><p>Monday - Thursday 9:00 - 22:00</p><p>Friday 9:30 - 17:15</p><p>Saturday 9:30 - 13:30</p></li>
+                    <li><h2>Kevin Street Library</h2><p style = "color: grey">Opening hours:</p><p>Monday - Thursday 8:00 - 21:00</p><p>Friday 9:30 - 17:35</p><p>Saturday 9:30 - 17:00</p></li>
+                </ul> 
+            </div>
+            <div data-role="footer">
+                <h5>Grange Mobile 2014</h5>
+            </div>
+        </div>
+        <!-- End of Library Page -->       
+    </body>
+</html>
+
+
+
+
+
